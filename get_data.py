@@ -9,14 +9,14 @@ def get_row_state(row):
     - row: BeautifulSoup object representing a row in the HTML table
 
     Returns:
-    - State string if found, 'N/A' otherwise
+    - State string if found, 'Error - get_row_state' otherwise
     """
     try:
         items = row.find('span', attrs={'class': 'views-field-field-fraud-state-administrative-area'})
         state_string = items.text
         return state_string[5:]
     except:
-        return 'N/A'
+        return 'Error - get_row_state'
     
 def get_row_year(row):
     """
@@ -26,14 +26,14 @@ def get_row_year(row):
     - row: BeautifulSoup object representing a row in the HTML table
 
     Returns:
-    - Year string if found, 'N/A' otherwise
+    - Year string if found, 'Error - get_row_year' otherwise
     """
     try:
         items = row.find('span', attrs={'class': 'views-field-field-year-of-disposition'})
         year_string = items.text
         return year_string[4:]
     except:
-        return 'N/A'
+        return 'Error - get_row_year'
 
 def get_row_name(row):
     """
@@ -43,14 +43,14 @@ def get_row_name(row):
     - row: BeautifulSoup object representing a row in the HTML table
 
     Returns:
-    - Name string if found, 'N/A' otherwise
+    - Name string if found, 'Error - get_row_name' otherwise
     """
     try:
         items = row.find('span', attrs={'class': 'views-field-name'})
         name_string = items.text
         return name_string[4:]
     except:
-        return 'N/A'
+        return 'Error - get_row_name'
 
 def get_row_case_type(row):
     """
@@ -60,14 +60,14 @@ def get_row_case_type(row):
     - row: BeautifulSoup object representing a row in the HTML table
 
     Returns:
-    - Case type string if found, 'N/A' otherwise
+    - Case type string if found, 'Error - get_row_case_type' otherwise
     """
     try:
         items = row.find('span', attrs={'class': 'views-field-field-case-type'})
         case_type_string = items.text
         return case_type_string[9:]
     except:
-        return 'N/A'
+        return 'Error - get_row_case_type'
 
 def get_row_fraud_type(row):
     """
@@ -77,52 +77,51 @@ def get_row_fraud_type(row):
     - row: BeautifulSoup object representing a row in the HTML table
 
     Returns:
-    - Fraud type string if found, 'N/A' otherwise
+    - Fraud type string if found, 'Error - get_row_fraud_type' otherwise
     """
     try:
         items = row.find('span', attrs={'class': 'views-field-field-fraud-type'})
         fraud_type_string = items.text
         return fraud_type_string[10:]
     except:
-        return 'N/A'
+        return 'Error - get_row_fraud_type'
 
-def get_row_outcomes(extra, count2):
+def get_row_outcomes(extra, index):
     """
     Extracts the outcomes from a given row.
 
     Parameters:
     - extra: BeautifulSoup object representing the extra row in the HTML table
-    - name: Name of the row
-    - count2: Index of the row in the extra rows
+    - index: Index of the row in the extra rows
 
     Returns:
-    - Outcomes string if found, 'N/A' otherwise
+    - Outcomes string if found, 'Error - get_row_outcomes' otherwise
     """
     try:
         count = 0
         for row in extra:
-            if count == count2:
+            if count == index:
                 outcomes = row.find('p', attrs={'class':'outcomes'})
                 return str(outcomes.text.strip())
             count = count + 1
     except:
-        return 'N/A - GetRowSource Error'
+        return 'Error - get_row_outcomes'
 
-def get_row_source(extra, count2):
+def get_row_source(extra, index):
     """
     Extracts the sources from a given row.
 
     Parameters:
     - extra: BeautifulSoup object representing the extra row in the HTML table
-    - count2: Index of the row in the extra rows
+    - index: Index of the row in the extra rows
 
     Returns:
-    - Cleaned sources string if found, 'N/A - GetRowSource Error' otherwise
+    - Cleaned sources string if found, 'Error - get_row_source' otherwise
     """
     try:
         count = 0
         for row in extra:
-            if count == count2:
+            if count == index:
                 sources = row.find('p', attrs={'class':'sources'})
                 clean1 = str(repr(sources.text.strip()))
                 clean2 = clean1.replace('\\n', '')
@@ -135,8 +134,7 @@ def get_row_source(extra, count2):
                 return clean10
             count = count + 1
     except:
-        return 'N/A - GetRowSource Error'
-
+        return 'Error - get_row_source'
 
 def run():
     """
