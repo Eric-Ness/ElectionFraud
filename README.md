@@ -4,7 +4,7 @@ To my knowledge, The Heritage Foundation has one of the best datasets regarding 
 
 https://www.heritage.org/voterfraud
 
-The fields are:
+The fields extracted are:
 - State
 - Year
 - Name
