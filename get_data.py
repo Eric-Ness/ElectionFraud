@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import pandas as pd
 import requests
 
 def get_row_state(row):
@@ -150,7 +151,6 @@ def run():
     Returns:
     None
     """
-
     # Request to website and download HTML contents
     url = 'https://www.heritage.org/voterfraud-print/search'
     req = requests.get(url)
@@ -163,18 +163,49 @@ def run():
     table = soup.find_all('div', attrs={'class': 'views-row'})
     extra = soup.find_all('div', attrs={'class': 'extra-row'})
 
+    # Initialize count
     count = 0
 
+    # Remove extra records
+    extra_records = 14
+
+    # Create a dataframe
+    df = pd.DataFrame(columns=['State', 'Year', 'Name', 'Case Type', 'Fraud Type', 'Outcomes', 'Source'])
+
     # Print each row
-    for row in table[1:2000]:
-        print('State: ', get_row_state(row))
-        print('Year: ', get_row_year(row))
-        print('Name: ', get_row_name(row))
-        print('Case Type: ', get_row_case_type(row))
-        print('Fraud Type: ', get_row_fraud_type(row))
-        print('Outcome: ', get_row_outcomes(extra, count))
-        print('Source: ', get_row_source(extra, count))
+    for row in table[1:(len(table)-extra_records)]:
+        state = get_row_state(row)
+        year = get_row_year(row)
+        name = get_row_name(row)
+        case_type = get_row_case_type(row)
+        fraud_type = get_row_fraud_type(row)
+        outcomes = get_row_outcomes(extra, count)
+        source = get_row_source(extra, count)
+
+        df = df._append({
+            'State': state, 
+            'Year': year, 
+            'Name': name, 
+            'Case Type': case_type, 
+            'Fraud Type': fraud_type, 
+            'Outcomes': outcomes, 
+            'Source': source}, 
+            ignore_index=True)
+
+        print('State: ', state)
+        print('Year: ', year)
+        print('Name: ', name)
+        print('Case Type: ', case_type)
+        print('Fraud Type: ', fraud_type)
+        print('Outcome: ', outcomes)
+        print('Source: ', source)
         print('-----------------')
         count = count + 1
+
+    # Print dataframe
+    print(df.head())
+
+    # Save dataframe to csv
+    df.to_csv('voter_fraud_cases.csv')
 
 run()
