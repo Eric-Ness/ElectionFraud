@@ -32,6 +32,8 @@ def get_row_year(row):
     try:
         items = row.find('span', attrs={'class': 'views-field-field-year-of-disposition'})
         year_string = items.text
+        if len(year_string[4:]) == 0:
+            return '1980' # Default year
         return year_string[4:]
     except:
         return 'Error - get_row_year'
@@ -170,7 +172,7 @@ def run():
     extra_records = 14
 
     # Create a dataframe
-    df = pd.DataFrame(columns=['State', 'Year', 'Name', 'Case Type', 'Fraud Type', 'Outcomes', 'Source'])
+    df = pd.DataFrame(columns=['ID', 'State', 'Year', 'Name', 'Case Type', 'Fraud Type', 'Outcomes', 'Source'])
 
     # Print each row
     for row in table[1:(len(table)-extra_records)]:
@@ -183,6 +185,7 @@ def run():
         source = get_row_source(extra, count)
 
         df = df._append({
+            'ID': str(count + 1),
             'State': state, 
             'Year': year, 
             'Name': name, 
@@ -206,6 +209,6 @@ def run():
     print(df.head())
 
     # Save dataframe to csv
-    df.to_csv('voter_fraud_cases.csv')
+    df.to_csv('data/voter_fraud_cases.csv', index=False)
 
 run()
