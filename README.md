@@ -40,3 +40,14 @@ The following libraries are needed for this project:
 ```
 pip install -r requirements.txt
 ```
+
+## References
+
+**Voter Fraud Data**
+https://www.heritage.org/voterfraud
+
+**State Boundary Shapefile**
+https://www.sciencebase.gov/catalog/item/52c78623e4b060b9ebca5be5
+
+**Voter Turnout Data**
+https://www.electproject.org/election-data/voter-turnout-data
