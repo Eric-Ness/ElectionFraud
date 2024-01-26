@@ -26,3 +26,17 @@ This notebook has a couple charts and maps for basic analysis. Feel free to cust
 ## Blog Post
 
 https://eric.ness.net/2024/01/26/election-fraud/
+
+## Requirements
+
+The following libraries are needed for this project:
+
+- beautifulsoup4==4.12.3
+- pandas==2.2
+- requests==2.31.0
+- matplotlib==3.8.2 
+- geopandas==0.14.2 
+
+```
+pip install -r requirements.txt
+```
