@@ -22,3 +22,7 @@ The fields extracted are:
 ## analyze.ipynb
 
 This notebook has a couple charts and maps for basic analysis. Feel free to customize for you own use.
+
+## Blog Post
+
+https://eric.ness.net/2024/01/26/election-fraud/
